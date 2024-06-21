@@ -83,6 +83,20 @@ export function* map<T, R>(iter: Iterable<T>, f: (x: T) => R): Iterable<R> {
   for (const x of iter) yield f(x);
 }
 
+export function range(length: number): Iterable<number>;
+export function range(
+  start: number,
+  endExclusive: number,
+  step?: number
+): Iterable<number>;
+export function* range(a: number, b?: number, step: number = 1) {
+  const [start, end] = b === undefined ? [0, a] : [a, b];
+
+  for (let i = start; i < end; i += step) {
+    yield i;
+  }
+}
+
 export function some<T>(gen: Iterable<T>, f: (x: T) => boolean): boolean {
   for (const x of gen) if (f(x)) return true;
 

@@ -23,3 +23,8 @@ ObjectEntries
 assertTypeEquals<string | 42, string | 42>(); // ok!
 assertTypeEquals<any, string | 42>(); // fail!
 ```
+
+### roadmap
+ * [ ] Properly document and test all current functionality
+ * [ ] Match core functionality of [utility-types](https://github.com/piotrwitek/utility-types), [ts-toolbelt](https://github.com/millsp/ts-toolbelt) and [typescript-tuple](https://github.com/ksxnodemodules/typescript-tuple)
+ * [ ] Match core functionality of [lodash](https://lodash.com/)
