@@ -1,1 +1,1 @@
-export { assert, assertEquals, assertThrows } from "jsr:@std/assert";
+export { assert, assertEquals, assertThrows } from "jsr:@std/assert@0.226";

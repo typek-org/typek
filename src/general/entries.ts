@@ -158,7 +158,7 @@ class AsyncObjectEntries<T extends object> {
   constructor(private entries: Iterable<[keyof T, Promise<T[keyof T]>]>) {}
   static fromObjectEntries<T extends object>(
     entries: Iterable<[keyof T, T[keyof T]]>
-  ) {
+  ): AsyncObjectEntries<T> {
     return new AsyncObjectEntries<T>(
       map(entries, ([key, value]) => [key, toPromise(value)])
     );
