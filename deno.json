@@ -1,0 +1,14 @@
+{
+  "name": "@typek/typek",
+  "version": "0.1.0",
+
+  "exports": {
+    ".": "./src/mod.ts"
+  },
+
+  "lint": {
+    "rules": {
+      "exclude": ["no-explicit-any", "no-namespace"]
+    }
+  }
+}
