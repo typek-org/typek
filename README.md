@@ -22,6 +22,8 @@ ObjectEntries
 
 assertTypeEquals<string | 42, string | 42>(); // ok!
 assertTypeEquals<any, string | 42>(); // fail!
+
+const { isDate, isResponse } = prototypeGuard({ Date, Response });
 ```
 
 ### roadmap
@@ -29,4 +31,3 @@ assertTypeEquals<any, string | 42>(); // fail!
  * [ ] Match core functionality of [utility-types](https://github.com/piotrwitek/utility-types), [ts-toolbelt](https://github.com/millsp/ts-toolbelt) and [typescript-tuple](https://github.com/ksxnodemodules/typescript-tuple)
  * [ ] Match core functionality of [lodash](https://lodash.com/) and [typedash](https://jsr.io/@typedash/typedash)
  * [ ] Match functionality of [@type/is](https://jsr.io/@type/is)
- 
