@@ -54,3 +54,10 @@ const typedArrayPrototypes = new Set([
 ]);
 export const isTypedArray: Guard<TypedArray> = (x): x is any =>
   typedArrayPrototypes.has(Object.getPrototypeOf(x));
+
+export const isPlainObject = (x: unknown): x is object => {
+  if (!isObject(x)) return false;
+
+  const proto = Object.getPrototypeOf(x);
+  return proto === null || proto === Object.prototype;
+};

@@ -1,6 +1,6 @@
 {
   "name": "@typek/typek",
-  "version": "0.1.6",
+  "version": "0.1.7",
 
   "exports": {
     ".": "./src/mod.ts"

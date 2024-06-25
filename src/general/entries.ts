@@ -1,3 +1,4 @@
+import { isPlainObject } from "../guard/mod.ts";
 import type {
   Primitive,
   AnyConstructor,
@@ -46,7 +47,7 @@ export function deeplyMap<Subject, Pattern, Substitute>(
   if (which(subject)) return <any>transformer(subject);
   if (Array.isArray(subject))
     return <any>subject.map((x) => deeplyMap(x, which, transformer));
-  if (typeof subject === "object" && subject !== null)
+  if (isPlainObject(subject))
     return <any>(
       Object.fromEntries(
         Object.entries(subject).map(([key, value]) => [
@@ -91,7 +92,7 @@ export async function deeplyAwait<Subject>(
   subject = await subject;
   if (Array.isArray(subject))
     return <any>await Promise.all(subject.map(deeplyAwait));
-  if (typeof subject === "object" && subject !== null) {
+  if (isPlainObject(subject)) {
     const values = await Promise.all(Object.values(subject).map(deeplyAwait));
     return <any>Object.fromEntries(zip(Object.keys(subject), values));
   }
