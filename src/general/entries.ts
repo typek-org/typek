@@ -150,8 +150,9 @@ class _ObjectEntries<T extends object> {
   }
 }
 
-export const ObjectEntries = _ObjectEntries.fromObject;
 export type ObjectEntries<T extends object> = _ObjectEntries<T>;
+export const ObjectEntries: <T extends object>(target: T) => ObjectEntries<T> =
+  _ObjectEntries.fromObject;
 
 class AsyncObjectEntries<T extends object> {
   #type!: T;
