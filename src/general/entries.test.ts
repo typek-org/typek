@@ -139,12 +139,18 @@ Deno.test("ObjectEntries.async", () => {
             u5.then(() => <const>"Bonobo Billy"),
           ]
       ),
+      rabbitHole: {
+        deeper: {
+          evenDeeper: u1.then(() => <const>"A Rabbit!"),
+        },
+      },
     };
 
     const personExpected = {
       name: <const>"Joe",
       surname: <const>"Mama",
       children: <const>["Banana Joie", "Gorilla Guy", "Bonobo Billy"],
+      rabbitHole: { deeper: { evenDeeper: <const>"A Rabbit!" } },
     };
 
     const person = await ObjectEntries(personLoading).deepAwait().collect();

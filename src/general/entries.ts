@@ -92,7 +92,7 @@ export async function deeplyAwait<Subject>(
   if (Array.isArray(subject))
     return <any>await Promise.all(subject.map(deeplyAwait));
   if (typeof subject === "object" && subject !== null) {
-    const values = await Promise.all(Object.values(subject));
+    const values = await Promise.all(Object.values(subject).map(deeplyAwait));
     return <any>Object.fromEntries(zip(Object.keys(subject), values));
   }
   return <any>subject;
