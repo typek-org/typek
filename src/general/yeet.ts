@@ -2,6 +2,7 @@
  * Throw from an expression.
  *
  * @example
+ * ```ts
  * function save(filename = yeet("Argument required")) { ... }
  *
  * const encoder =
@@ -16,6 +17,7 @@
  *     this._id = value ?? yeet("Invalid value");
  *   }
  * }
+ * ```
  */
 export function yeet(msg: string): never;
 export function yeet<T extends any[]>(
