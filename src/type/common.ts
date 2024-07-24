@@ -37,3 +37,13 @@ export type TypedArray =
   | Uint16Array
   | Uint32Array
   | BigUint64Array;
+
+/**
+ * Construct a type with the properties of T except for those in type K.
+ *
+ * The `Omit<T>` from TypeScript's standard library is utterly broken
+ * on union types, as per [#54451](https://github.com/microsoft/TypeScript/issues/54451).
+ */
+export type Omit<T, K extends keyof any> = T extends infer S
+  ? { [P in Exclude<keyof S, K>]: S[P] }
+  : never;
