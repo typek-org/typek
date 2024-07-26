@@ -37,14 +37,14 @@ export type IsSingleChar<T extends string> = Chars<T> extends [infer Atom]
  * ```
  */
 export type Join<
-  Separator extends string,
-  List extends string[]
+  List extends string[],
+  Separator extends string
 > = List extends []
   ? ""
   : List extends [infer Item extends string]
   ? Item
   : List extends [infer Head extends string, ...infer Tail extends string[]]
-  ? `${Head}${Separator}${Join<Separator, Tail>}`
+  ? `${Head}${Separator}${Join<Tail, Separator>}`
   : string;
 
 /**
@@ -60,8 +60,8 @@ export type Join<
  * ```
  */
 export type Split<
-  Separator extends string,
-  Source extends string
+  Source extends string,
+  Separator extends string
 > = SplitHelper<Separator, Source, "", []>;
 
 type SplitHelper<
