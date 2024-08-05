@@ -1,6 +1,10 @@
 {
   "name": "@typek/typek",
-  "version": "0.1.16",
+  "version": "0.2.0",
+
+  "compilerOptions": {
+    "lib": ["esnext", "dom"]
+  },
 
   "exports": {
     ".": "./src/mod.ts"
