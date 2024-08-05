@@ -6,6 +6,6 @@ export {
   assertThrows,
   unimplemented,
   unreachable,
-} from "jsr:@std/assert@0.226";
+} from "jsr:@std/assert@1.0.2";
 
 export const assertNever = (_: never): never => unreachable();
