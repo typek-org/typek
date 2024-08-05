@@ -1,3 +1,5 @@
+/// <reference lib="deno.ns" />
+
 import { assertTypeEquals } from "../mod.ts";
 import { assertEquals } from "../test/assert.ts";
 import { toPipable, pipe } from "./pipe.ts";
@@ -18,7 +20,7 @@ Deno.test("pipe", () => {
       (x) => {
         assertTypeEquals<typeof x, string[]>();
         return x.join(" ");
-      }
+      },
     );
     assertEquals(bigGuy, "Hey, JOE! Hey, JOE! Hey, JOE!");
     assertTypeEquals<typeof bigGuy, string>();
@@ -35,7 +37,7 @@ Deno.test("pipe", () => {
       (x) => [0, ...x],
       map((x) => 2 * x),
       map((x) => x.toString()),
-      ([x, y, z]) => [z, y, x] as const
+      ([x, y, z]) => [z, y, x] as const,
     );
     assertEquals(b, ["4", "2", "0"]);
     assertTypeEquals<typeof b, readonly [string, string, string]>();

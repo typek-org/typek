@@ -1,3 +1,5 @@
+/// <reference lib="deno.ns" />
+
 import { assertTypeEquals } from "../mod.ts";
 import { assertEquals } from "../test/mod.ts";
 import { prototypeGuard } from "./prototype-guard.ts";

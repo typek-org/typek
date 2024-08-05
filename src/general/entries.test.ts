@@ -1,3 +1,5 @@
+/// <reference lib="deno.ns" />
+
 import {
   assertEquals,
   assertTypeEquals,
@@ -112,10 +114,10 @@ Deno.test("ObjectEntries.transform", () => {
               string,
               " web page! Make yourself at ",
               string,
-              "!"
+              "!",
             ];
           },
-          string
+          string,
         ];
       }
     >();
@@ -137,7 +139,7 @@ Deno.test("ObjectEntries.async", () => {
             "Banana Joie",
             u2.then(() => <const>"Gorilla Guy"),
             u5.then(() => <const>"Bonobo Billy"),
-          ]
+          ],
       ),
       rabbitHole: {
         deeper: {
