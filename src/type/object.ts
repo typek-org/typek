@@ -32,6 +32,26 @@ export type KeysIntersection<Objs> = keyof Objs;
 export type ValuesUnion<Objs> = Objs extends any ? Objs[keyof Objs] : never;
 
 /**
+ * Takes a union of objects and flattens them so that they can
+ * be safely destructured.
+ *
+ * @example
+ * ```ts
+ * let x: { type: 'car', model: string } | { type: 'bike', electric: boolean };
+ * const { type, model, electric } = x as FieldsOfUnion<typeof x>;
+ * ```
+ *
+ * @see fields
+ */
+export type FieldsOfUnion<T extends object> = SimplifyType<
+  Pick<T, keyof T> & {
+    [K in KeysUnion<T>]?: Extract<T, { [k in K]: any }>[K];
+  }
+>;
+
+export const fields = <T extends object>(x: T): FieldsOfUnion<T> => x as any;
+
+/**
  * Given an object and a pattern, returns the keys whose corresponding
  * values are assignable to the provided patern.
  */
