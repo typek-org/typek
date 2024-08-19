@@ -1,6 +1,6 @@
 {
   "name": "@typek/typek",
-  "version": "0.4.1",
+  "version": "0.5.0",
 
   "compilerOptions": {
     "lib": ["esnext", "dom"]
