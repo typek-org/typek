@@ -37,8 +37,9 @@ export type ValuesUnion<Objs> = Objs extends any ? Objs[keyof Objs] : never;
  *
  * @example
  * ```ts
- * let x: { type: 'car', model: string } | { type: 'bike', electric: boolean };
- * const { type, model, electric } = x as FieldsOfUnion<typeof x>;
+ * type Transport = { type: 'car', model: string } | { type: 'bike', electric: boolean };
+ * type TransportFields = FieldsOfUnion<Transport>;
+ * // { type: 'car' | 'bike', model?: string, electric?: boolean }
  * ```
  *
  * @see fields
@@ -49,6 +50,19 @@ export type FieldsOfUnion<T extends object> = SimplifyType<
   }
 >;
 
+/**
+ * Takes a value whose type is a union of objects, and returns a value
+ * whose type contains all the possible fields of subsequent objects.
+ * This way, the value can be safely destructured.
+ *
+ * At runtime, this function is a noop.
+ *
+ * @example
+ * ```ts
+ * let x: { type: 'car', model: string } | { type: 'bike', electric: boolean };
+ * const { type, model, electric } = fields(x);
+ * ```
+ */
 export const fields = <T extends object>(x: T): FieldsOfUnion<T> => x as any;
 
 /**
