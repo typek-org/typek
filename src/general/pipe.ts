@@ -86,7 +86,7 @@ export interface PipeOf<A> {
     i: (v: D) => E,
     j: (v: E) => F,
     k: (v: F) => G
-  ): F;
+  ): G;
   pipe<F extends AnyFn[], FirstFn extends (v: A) => Parameters<F[0]>[0]>(
     firstFn: FirstFn,
     ...fns: PipeArgs<F> extends F ? F : PipeArgs<F>
