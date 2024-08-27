@@ -52,7 +52,7 @@ export function pipe<A, B, C, D, E, F, G>(
   i: (v: D) => E,
   j: (v: E) => F,
   k: (v: F) => G
-): F;
+): G;
 export function pipe<F extends AnyFn[]>(
   arg: Parameters<F[0]>[0],
   ...fns: PipeArgs<F> extends F ? F : PipeArgs<F>
