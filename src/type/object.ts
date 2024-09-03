@@ -46,7 +46,7 @@ export type ValuesUnion<Objs> = Objs extends any ? Objs[keyof Objs] : never;
  */
 export type FieldsOfUnion<T extends object> = SimplifyType<
   Pick<T, keyof T> & {
-    [K in KeysUnion<T>]?: Extract<T, { [k in K]: any }>[K];
+    [K in KeysUnion<T>]?: Extract<T, { [k in K]?: any }>[K];
   }
 >;
 
