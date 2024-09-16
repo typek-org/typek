@@ -8,8 +8,6 @@ export type Primitive =
   | undefined;
 
 export type PositiveInfinity = typeof Infinity;
-
-// Bug in JSR: https://github.com/jsr-io/jsr/issues/617
 export type NegativeInfinity = -1e999;
 
 export interface AnyFunction {
