@@ -28,11 +28,17 @@ export type FormDataConstructor = FormData & {
 };
 
 type FormData_ = FormData;
-const FormData_: FormDataConstructor = new Proxy(FormData as any, {
-  get(target, prop, receiver) {
+const FormData_: FormDataConstructor = new Proxy(Object.create(FormData), {
+  apply(...args) {
+    return Reflect.apply(...args);
+  },
+  construct(...args) {
+    return Reflect.construct(...args);
+  },
+  get(_, prop, __) {
     if (prop === "from") return formDataFrom;
     if (prop === "entries") return formDataEntries;
-    return Reflect.get(target, prop, receiver);
+    return Reflect.get(FormData, prop, FormData_);
   },
 });
 
