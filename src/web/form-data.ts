@@ -32,7 +32,7 @@ const FormData_: FormDataConstructor = new Proxy(FormData as any, {
   get(target, prop, receiver) {
     if (prop === "from") return formDataFrom;
     if (prop === "entries") return formDataEntries;
-    Reflect.get(target, prop, receiver);
+    return Reflect.get(target, prop, receiver);
   },
 });
 
