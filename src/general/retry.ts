@@ -1,10 +1,7 @@
 import { abortSignalToPromise, delay } from "../mod.ts";
 
 export class AggregateError extends Error {
-  constructor(
-    public readonly message: string,
-    public readonly causes: unknown[]
-  ) {
+  constructor(message: string, public readonly causes: unknown[]) {
     super(message, { cause: causes.at(-1) });
   }
 }
