@@ -10,6 +10,20 @@ export type Primitive =
 export type PositiveInfinity = typeof Infinity;
 export type NegativeInfinity = -1e999;
 
+export type Tuple<N extends number, T> = N extends number
+  ? number extends N
+    ? T[]
+    : Tuple_Helper<N, T>
+  : T[];
+
+type Tuple_Helper<
+  N extends number,
+  T,
+  Aggregate extends T[] = []
+> = Aggregate["length"] extends N
+  ? Aggregate
+  : Tuple_Helper<N, T, [...Aggregate, T]>;
+
 export interface AnyFunction {
   (...args: any): any;
 }

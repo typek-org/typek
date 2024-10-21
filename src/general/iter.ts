@@ -1,3 +1,6 @@
+import { assert, type Tuple } from "../mod.ts";
+import { yeet } from "./yeet.ts";
+
 export function* concat<T>(...iters: Iterable<T>[]): Iterable<T> {
   for (const iter of iters) {
     yield* iter;
@@ -121,5 +124,46 @@ export function* zip<T extends any[]>(
     const results = iterators.map((iterator) => iterator.next());
     if (results.some((result) => result.done)) return;
     yield results.map((result) => result.value) as T;
+  }
+}
+
+const copyTuple = <N extends number, T>(x: Tuple<N, T>) =>
+  [...x] as Tuple<N, T>;
+const isTuple = <N extends number, T>(n: N, x: T[]): x is Tuple<N, T> =>
+  x.length === n;
+
+export function* windows<N extends number, T>(
+  n: N,
+  iter: Iterable<T>
+): Iterable<Tuple<N, T>> {
+  const it = iter[Symbol.iterator]();
+  const win: T[] = [];
+
+  // fill in the first window
+  while (win.length < n) {
+    const { value, done } = it.next();
+    if (done) {
+      if (win.length === 0) {
+        // Empty iterable, return quietly
+        return;
+      } else {
+        yeet(
+          `The iterable was shorter (${win.length}) than the requested window size (${n}).`
+        );
+      }
+    }
+    win.push(value);
+  }
+
+  // type black magic
+  assert(isTuple(n, win));
+
+  // yield windows
+  while (true) {
+    yield copyTuple(win);
+    const { value, done } = it.next();
+    if (done) return;
+    win.shift();
+    win.push(value);
   }
 }
