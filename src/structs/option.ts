@@ -5,7 +5,7 @@ class OptionClass<
   Inner extends IsSome extends true ? unknown : never
 > implements Iterable<Inner>
 {
-  private constructor(
+  constructor(
     /**
      * For `Some(value)` returns `true`; for `None` returns `false`.
      */
@@ -23,53 +23,17 @@ class OptionClass<
     if (this.isSome) yield this.inner!;
   }
 
-  /**
-   * Returns the “no value” variant of Option.
-   */
-  static None: Option.None = Object.freeze(new OptionClass(false));
-
-  /**
-   * Constructs an Option containing the value.
-   */
-  static Some<T>(value: T): Option.Some<T> {
-    return new OptionClass(true, value);
-  }
-
-  /**
-   * Converts a possibly undefined value into an Option.
-   * Values strictly equal to `undefined` are turned into `None`,
-   * all other values are returned as `Some`.
-   */
-  static from<T>(value: T | undefined): Option<T> {
-    return new OptionClass(value !== undefined, value) as Option<T>;
-  }
-
-  get isNone(): boolean {
-    return !this.isSome;
+  get isNone(): IsSome extends true
+    ? false
+    : IsSome extends false
+    ? true
+    : boolean {
+    return !this.isSome as any;
   }
 
   map<S>(fn: (value: Inner) => S): Option<S> {
     if (this.isSome) return Option.Some(fn(this.inner!));
     else return Option.None;
-  }
-
-  /**
-   * If `opt` is `Some(value)`, returns `Some(fn(value))`, else returns `None`.
-   */
-  static map<T, S>(opt: Option<T>, fn: (value: T) => S): Option<S>;
-  /**
-   * If `val` is `undefined`, returns `undefined`, else returns `fn(val)`.
-   *
-   * Same as `Option.from(val).map(fn).inner`.
-   */
-  static map<T, S>(val: T | undefined, fn: (value: T) => S): S | undefined;
-  static map<T, S>(
-    val: Option<T> | T | undefined,
-    fn: (value: T) => S
-  ): Option<S> | S | undefined {
-    if (isOption(val)) return val.map(fn);
-    if (val === undefined) return undefined;
-    return fn(val);
   }
 }
 OptionClass.prototype.pipe = function <T>(this: Option<T>, ...fns: any[]) {
@@ -85,7 +49,6 @@ OptionClass.prototype.pipe = function <T>(this: Option<T>, ...fns: any[]) {
  * and `o.inner`.
  */
 type Option<T> = (Option.None | Option.Some<T>) & PipeOf<Option<T>>;
-const Option = OptionClass;
 
 namespace Option {
   /**
@@ -94,9 +57,19 @@ namespace Option {
   export type None = OptionClass<false, never>;
 
   /**
+   * Returns the “no value” variant of Option.
+   */
+  export const None: None = Object.freeze(new OptionClass(false));
+
+  /**
    * Some value of type T.
    */
   export type Some<T> = OptionClass<true, T>;
+
+  /**
+   * Constructs an Option containing the value.
+   */
+  export const Some = <T>(value: T): Some<T> => new OptionClass(true, value);
 
   /**
    * For `Some<T>` returns `T`; for `None` returns `undefined`
@@ -104,9 +77,42 @@ namespace Option {
   export type Inner<O extends Option<any>> = O extends Option.Some<infer T>
     ? T
     : undefined;
+
+  /**
+   * Converts a possibly undefined value into an Option.
+   * Values strictly equal to `undefined` are turned into `None`,
+   * all other values are returned as `Some`.
+   */
+  export function from<T>(value: T | undefined): Option<T> {
+    return new OptionClass(value !== undefined, value) as Option<T>;
+  }
+
+  /**
+   * If `opt` is `Some(value)`, returns `Some(fn(value))`, else returns `None`.
+   */
+  export function map<T, S>(opt: Option<T>, fn: (value: T) => S): Option<S>;
+
+  /**
+   * If `val` is `undefined`, returns `undefined`, else returns `fn(val)`.
+   *
+   * Same as `Option.from(val).map(fn).inner`.
+   */
+  export function map<T, S>(
+    val: T | undefined,
+    fn: (value: T) => S
+  ): S | undefined;
+
+  export function map<T, S>(
+    val: Option<T> | T | undefined,
+    fn: (value: T) => S
+  ): Option<S> | S | undefined {
+    if (isOption(val)) return val.map(fn);
+    if (val === undefined) return undefined;
+    return fn(val);
+  }
 }
 
 export { Option };
 
 export const isOption = (x: unknown): x is Option<unknown> =>
-  x instanceof Option;
+  x instanceof OptionClass;
