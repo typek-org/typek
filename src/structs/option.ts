@@ -14,7 +14,7 @@ class OptionClass<
     /**
      * For `Some(value)` returns the value; for `None` returns `undefined`.
      */
-    public readonly inner?: Inner
+    public readonly inner: IsSome extends true ? Inner : undefined
   ) {}
 
   declare pipe: PipeOf<Option<Inner>>["pipe"];
@@ -59,7 +59,7 @@ namespace Option {
   /**
    * Returns the “no value” variant of Option.
    */
-  export const None: None = Object.freeze(new OptionClass(false));
+  export const None: None = Object.freeze(new OptionClass(false, undefined));
 
   /**
    * Some value of type T.
