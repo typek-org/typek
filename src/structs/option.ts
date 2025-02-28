@@ -1,6 +1,6 @@
 import { pipe, type PipeOf } from "../mod.ts";
 
-class OptionClass<
+export class OptionClass<
   IsSome extends boolean,
   Inner extends IsSome extends true ? unknown : never
 > implements Iterable<Inner>
